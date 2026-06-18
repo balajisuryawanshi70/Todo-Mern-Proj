@@ -36,20 +36,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
     }
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high':
-        return 'text-red-500';
-      case 'medium':
-        return 'text-yellow-500';
-      case 'low':
-        return 'text-green-500';
-      default:
-        return 'text-gray-500';
-    }
-  };
 
   const isOverdue = new Date(task.dueDate) < new Date() && task.status !== 'completed';
+  
 
   return (
   <div

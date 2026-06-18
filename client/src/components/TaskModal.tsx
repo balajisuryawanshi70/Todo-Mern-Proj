@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { X } from 'lucide-react';
+import { 
+  X,Calendar,
+  Flag,
+  FileText,
+  Type, } from 'lucide-react';
 import { createTask, updateTask } from '../store/slice/taskSlice';
 import type { RootState, AppDispatch } from '../store';
 
@@ -76,85 +80,309 @@ const handleSubmit = async (e: React.FormEvent) => {
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center">
+return (
+  <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    
+    {/* Backdrop */}
+    <div
+      className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+      onClick={onClose}
+    />
+
+    {/* Modal */}
+    <div
+      className={`
+        relative w-full max-w-2xl
+        rounded-3xl
+        shadow-2xl
+        border
+        overflow-hidden
+        animate-in fade-in zoom-in duration-200
+        ${
+          isDark
+            ? "bg-gray-900 border-gray-700"
+            : "bg-white border-gray-200"
+        }
+      `}
+    >
+      {/* Header */}
       <div
-        className={`p-6 rounded-lg shadow-lg ${isDark ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
-        style={{ maxWidth: '500px', width: '100%' }}
+        className={`
+          px-6 py-5 border-b
+          ${
+            isDark
+              ? "border-gray-700"
+              : "border-gray-200"
+          }
+        `}
       >
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold">{task ? 'Edit Task' : 'Create Task'}</h2>
-          <button onClick={onClose}>
+        <div className="flex items-center justify-between">
+          <div>
+            <h2
+              className={`text-2xl font-bold ${
+                isDark
+                  ? "text-white"
+                  : "text-gray-900"
+              }`}
+            >
+              {task ? "Edit Task" : "Create New Task"}
+            </h2>
+
+            <p
+              className={`text-sm mt-1 ${
+                isDark
+                  ? "text-gray-400"
+                  : "text-gray-500"
+              }`}
+            >
+              Manage your tasks efficiently
+            </p>
+          </div>
+
+          <button
+            onClick={onClose}
+            className={`
+              p-2 rounded-xl transition
+              ${
+                isDark
+                  ? "hover:bg-gray-800"
+                  : "hover:bg-gray-100"
+              }
+            `}
+          >
             <X size={20} />
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="mt-4">
-          <div className="mb-4">
-            <label htmlFor="title" className="block text-sm font-medium">Title</label>
+      </div>
+
+      {/* Form */}
+      <form
+        onSubmit={handleSubmit}
+        className="p-6 space-y-5"
+      >
+        {/* Title */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Task Title
+          </label>
+
+          <div className="relative">
+            <Type
+              size={18}
+              className="absolute left-3 top-3.5 text-gray-400"
+            />
+
             <input
               type="text"
-              id="title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) =>
+                setTitle(e.target.value)
+              }
               required
-              className="w-full p-2 mt-1 border rounded"
+              placeholder="Enter task title"
+              className={`
+                w-full pl-10 pr-4 py-3 rounded-xl border
+                focus:ring-2 focus:ring-indigo-500
+                outline-none
+                ${
+                  isDark
+                    ? "bg-gray-800 border-gray-700 text-white"
+                    : "bg-white border-gray-300"
+                }
+              `}
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="description" className="block text-sm font-medium">Description</label>
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Description
+          </label>
+
+          <div className="relative">
+            <FileText
+              size={18}
+              className="absolute left-3 top-3.5 text-gray-400"
+            />
+
             <textarea
-              id="description"
+              rows={4}
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) =>
+                setDescription(e.target.value)
+              }
               required
-              className="w-full p-2 mt-1 border rounded"
+              placeholder="Describe the task..."
+              className={`
+                w-full pl-10 pr-4 py-3 rounded-xl border
+                resize-none
+                focus:ring-2 focus:ring-indigo-500
+                outline-none
+                ${
+                  isDark
+                    ? "bg-gray-800 border-gray-700 text-white"
+                    : "bg-white border-gray-300"
+                }
+              `}
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="priority" className="block text-sm font-medium">Priority</label>
+        </div>
+
+        {/* Priority + Status */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              Priority
+            </label>
+
+            <div className="relative">
+              <Flag
+                size={18}
+                className="absolute left-3 top-3.5 text-gray-400"
+              />
+
+              <select
+                value={priority}
+                onChange={(e) =>
+                  setPriority(
+                    e.target.value as
+                      | "low"
+                      | "medium"
+                      | "high"
+                  )
+                }
+                className={`
+                  w-full pl-10 pr-4 py-3 rounded-xl border
+                  focus:ring-2 focus:ring-indigo-500
+                  outline-none
+                  ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700 text-white"
+                      : "bg-white border-gray-300"
+                  }
+                `}
+              >
+                <option value="low">
+                  🟢 Low Priority
+                </option>
+                <option value="medium">
+                  🟡 Medium Priority
+                </option>
+                <option value="high">
+                  🔴 High Priority
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              Status
+            </label>
+
             <select
-              id="priority"
-              value={priority}
-              onChange={(e) => setPriority(e.target.value as 'low' | 'medium' | 'high')}
-              className={`w-full p-2 mt-1 border rounded ${isDark ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
+              value={status}
+              onChange={(e) =>
+                setStatus(
+                  e.target.value as
+                    | "pending"
+                    | "completed"
+                )
+              }
+              className={`
+                w-full px-4 py-3 rounded-xl border
+                focus:ring-2 focus:ring-indigo-500
+                outline-none
+                ${
+                  isDark
+                    ? "bg-gray-800 border-gray-700 text-white"
+                    : "bg-white border-gray-300"
+                }
+              `}
             >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
+              <option value="pending">
+                Pending
+              </option>
+              <option value="completed">
+                Completed
+              </option>
             </select>
           </div>
-          <div className="mb-4">
-            <label htmlFor="dueDate" className="block text-sm font-medium">Due Date</label>
+        </div>
+
+        {/* Due Date */}
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Due Date
+          </label>
+
+          <div className="relative">
+            <Calendar
+              size={18}
+              className="absolute left-3 top-3.5 text-gray-400"
+            />
+
             <input
               type="date"
-              id="dueDate"
               value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
+              onChange={(e) =>
+                setDueDate(e.target.value)
+              }
               required
-              className="w-full p-2 mt-1 border rounded"
+              className={`
+                w-full pl-10 pr-4 py-3 rounded-xl border
+                focus:ring-2 focus:ring-indigo-500
+                outline-none
+                ${
+                  isDark
+                    ? "bg-gray-800 border-gray-700 text-white"
+                    : "bg-white border-gray-300"
+                }
+              `}
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="status" className="block text-sm font-medium">Status</label>
-            <select
-              id="status"
-              value={status}
-              onChange={(e) => setStatus(e.target.value as 'pending' | 'completed')}
-              className={`w-full p-2 mt-1 border rounded ${isDark ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
-            >
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
-            </select>
-          </div>
-          <div className="flex justify-end">
-            <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded">
-              {task ? 'Update Task' : 'Create Task'}
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        {/* Footer */}
+        <div className="flex justify-end gap-3 pt-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className={`
+              px-5 py-3 rounded-xl font-medium transition
+              ${
+                isDark
+                  ? "bg-gray-800 hover:bg-gray-700 text-white"
+                  : "bg-gray-100 hover:bg-gray-200"
+              }
+            `}
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            className="
+              px-6 py-3
+              bg-indigo-600
+              hover:bg-indigo-700
+              text-white
+              rounded-xl
+              font-semibold
+              shadow-lg
+              transition
+            "
+          >
+            {task
+              ? "Update Task"
+              : "Create Task"}
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
 };
 
 export default TaskModal;
