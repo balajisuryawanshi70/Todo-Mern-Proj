@@ -81,23 +81,23 @@ const handleSubmit = async (e: React.FormEvent) => {
   if (!isOpen) return null;
 
 return (
-  <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
     
     {/* Backdrop */}
     <div
-      className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+      className="absolute inset-0 bg-black/40 backdrop-blur-sm"
       onClick={onClose}
     />
 
     {/* Modal */}
     <div
       className={`
-        relative w-full max-w-2xl
+        relative w-full max-w-md max-h-[90vh]
         rounded-3xl
         shadow-2xl
         border
         overflow-hidden
-        animate-in fade-in zoom-in duration-200
+        animate-in fade-in zoom-in duration-200 overflow-y-auto
         ${
           isDark
             ? "bg-gray-900 border-gray-700"
@@ -108,7 +108,7 @@ return (
       {/* Header */}
       <div
         className={`
-          px-6 py-5 border-b
+          px-5 py-4 border-b
           ${
             isDark
               ? "border-gray-700"
@@ -119,7 +119,7 @@ return (
         <div className="flex items-center justify-between">
           <div>
             <h2
-              className={`text-2xl font-bold ${
+              className={`text-xl font-bold ${
                 isDark
                   ? "text-white"
                   : "text-gray-900"
@@ -158,7 +158,7 @@ return (
       {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="p-6 space-y-5"
+        className="p-5 space-y-4"
       >
         {/* Title */}
         <div>
@@ -181,7 +181,7 @@ return (
               required
               placeholder="Enter task title"
               className={`
-                w-full pl-10 pr-4 py-3 rounded-xl border
+                w-full pl-10 pr-4 py-2.5 rounded-xl border
                 focus:ring-2 focus:ring-indigo-500
                 outline-none
                 ${
@@ -207,7 +207,7 @@ return (
             />
 
             <textarea
-              rows={4}
+              rows={2}
               value={description}
               onChange={(e) =>
                 setDescription(e.target.value)
@@ -215,7 +215,7 @@ return (
               required
               placeholder="Describe the task..."
               className={`
-                w-full pl-10 pr-4 py-3 rounded-xl border
+                w-full pl-10 pr-4 py-2.5 rounded-xl border
                 resize-none
                 focus:ring-2 focus:ring-indigo-500
                 outline-none
@@ -253,7 +253,7 @@ return (
                   )
                 }
                 className={`
-                  w-full pl-10 pr-4 py-3 rounded-xl border
+                  w-full pl-10 pr-4 py-2.5 rounded-xl border
                   focus:ring-2 focus:ring-indigo-500
                   outline-none
                   ${
@@ -291,7 +291,7 @@ return (
                 )
               }
               className={`
-                w-full px-4 py-3 rounded-xl border
+                w-full px-4 py-2.5 rounded-xl border
                 focus:ring-2 focus:ring-indigo-500
                 outline-none
                 ${
@@ -331,7 +331,7 @@ return (
               }
               required
               className={`
-                w-full pl-10 pr-4 py-3 rounded-xl border
+                w-full pl-10 pr-4 py-2.5 rounded-xl border
                 focus:ring-2 focus:ring-indigo-500
                 outline-none
                 ${
@@ -350,7 +350,7 @@ return (
             type="button"
             onClick={onClose}
             className={`
-              px-5 py-3 rounded-xl font-medium transition
+              px-5 py-2.5 rounded-xl font-medium transition
               ${
                 isDark
                   ? "bg-gray-800 hover:bg-gray-700 text-white"
@@ -364,7 +364,7 @@ return (
           <button
             type="submit"
             className="
-              px-6 py-3
+              px-6 py-2.5
               bg-indigo-600
               hover:bg-indigo-700
               text-white
