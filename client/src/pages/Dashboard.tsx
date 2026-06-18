@@ -5,8 +5,7 @@ import { PlusCircle,
   Calendar,
   AlertCircle,
   CheckCircle,
-  Clock,
-  Sparkles } from 'lucide-react';
+  Clock } from 'lucide-react';
 import { fetchTasks } from '../store/slice/taskSlice';
 import type { RootState, AppDispatch } from '../store';
 import TaskModal from '../components/TaskModal';
@@ -61,54 +60,6 @@ const highPriorityCount = tasks.filter(
     );
   }
 
-  // return (
-  //   <div className="max-w-6xl mx-auto">
-  //     <div className="flex justify-between items-center mb-8">
-  //       <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>My Tasks</h1>
-  //       <button
-  //         onClick={openCreateModal}
-  //         className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-  //       >
-  //         <PlusCircle size={20} className="mr-2" />
-  //         Add Task
-  //       </button>
-  //     </div>
-
-  //     {/* Summary Cards */}
-  //     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-  //       <SummaryCard icon={<Calendar size={20} className="text-yellow-500" />} title="Due Today" count={dueTodayCount} isDark={isDark} />
-  //       <SummaryCard icon={<AlertCircle size={20} className="text-red-500" />} title="High Priority" count={highPriorityCount} isDark={isDark} />
-  //       <SummaryCard icon={<Clock size={20} className="text-blue-500" />} title="Pending" count={pendingCount} isDark={isDark} />
-  //       <SummaryCard icon={<CheckCircle size={20} className="text-green-500" />} title="Completed" count={completedCount} isDark={isDark} />
-  //     </div>
-
-  //     {/* Filter */}
-  //     <div className="flex space-x-2 mb-6">
-  //       {['all', 'pending', 'completed'].map(status => (
-  //         <button
-  //           key={status}
-  //           onClick={() => setFilterStatus(status as 'all' | 'pending' | 'completed')}
-  //           className={`px-4 py-2 rounded ${
-  //             filterStatus === status
-  //               ? 'bg-indigo-600 text-white'
-  //               : 'bg-gray-200 text-gray-800'
-  //           }`}
-  //         >
-  //           {status.charAt(0).toUpperCase() + status.slice(1)}
-  //         </button>
-  //       ))}
-  //     </div>
-
-  //     {/* Tasks */}
-  //     <div className="space-y-4">
-  //       {filteredTasks.map((task) => (
-  //         <TaskCard key={task._id} task={task} onEdit={() => openEditModal(task)} />
-  //       ))}
-  //     </div>
-
-  //     <TaskModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} task={selectedTask} />
-  //   </div>
-  // );
 return (
   <div className="max-w-7xl mx-auto px-4 py-6">
     {/* Header Banner */}
@@ -291,99 +242,6 @@ return (
 };
 
 
-// const SummaryCard = ({ icon, title, count, isDark }: any) => (
-//   <div className={`p-4 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-md`}>
-//     <div className="flex items-center mb-2 space-x-2">
-//       {icon}
-//       <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-//         {title} ({count})
-//       </h2>
-//     </div>
-//   </div>
-// );
-interface SummaryCardProps {
-  icon: React.ReactNode;
-  title: string;
-  count: number;
-  isDark: boolean;
-  color: "yellow" | "red" | "blue" | "green";
-}
 
-const SummaryCard = ({
-  icon,
-  title,
-  count,
-  isDark,
-  color,
-}: SummaryCardProps) => {
-  const colorClasses = {
-    yellow: "bg-yellow-100 text-yellow-600",
-    red: "bg-red-100 text-red-600",
-    blue: "bg-blue-100 text-blue-600",
-    green: "bg-green-100 text-green-600",
-  };
-
-  return (
-    <div
-      className={`
-        relative overflow-hidden
-        rounded-2xl p-6
-        shadow-md hover:shadow-xl
-        transition-all duration-300
-        hover:-translate-y-1
-        border
-        ${
-          isDark
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-100"
-        }
-      `}
-    >
-      <div className="flex justify-between items-center">
-        <div>
-          <p
-            className={`text-sm font-medium ${
-              isDark ? "text-gray-400" : "text-gray-500"
-            }`}
-          >
-            {title}
-          </p>
-
-          <h2
-            className={`mt-2 text-3xl font-bold ${
-              isDark ? "text-white" : "text-gray-900"
-            }`}
-          >
-            {count}
-          </h2>
-        </div>
-
-        <div
-          className={`
-            w-14 h-14
-            rounded-xl
-            flex items-center justify-center
-            ${colorClasses[color]}
-          `}
-        >
-          {icon}
-        </div>
-      </div>
-
-      {/* Decorative Gradient */}
-      <div
-        className="
-          absolute
-          -right-8
-          -bottom-8
-          w-24
-          h-24
-          rounded-full
-          bg-indigo-500/10
-        "
-      />
-    </div>
-  );
-};
 
 export default Dashboard;
