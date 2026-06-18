@@ -45,92 +45,234 @@ const Profile = () => {
 
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className={`${isDark ? 'bg-gray-800 text-white' : 'bg-white'} rounded-lg shadow-md p-6`}>
-        <h2 className="text-2xl font-bold mb-6">Profile Settings</h2>
+  <div className="max-w-5xl mx-auto px-4">
+    <div
+      className={`rounded-3xl overflow-hidden shadow-xl border ${
+        isDark
+          ? "bg-gray-900 border-gray-800"
+          : "bg-white border-gray-200"
+      }`}
+    >
+      {/* Header */}
+      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 px-8 py-10">
+        <div className="flex flex-col md:flex-row items-center gap-6">
+          {/* Avatar */}
+          <div className="h-24 w-24 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white text-4xl font-bold">
+            {user?.name?.charAt(0).toUpperCase()}
+          </div>
 
+          <div>
+            <h1 className="text-3xl font-bold text-white">
+              {user?.name}
+            </h1>
+
+            <p className="text-indigo-100 mt-1">
+              {user?.email}
+            </p>
+
+            <span className="inline-block mt-3 px-3 py-1 rounded-full bg-white/20 text-white text-sm">
+              Account Settings
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-8">
         {message && (
           <div
-            className={`p-4 rounded-md mb-6 ${
-              message.includes('success') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            className={`mb-6 p-4 rounded-xl ${
+              message.includes("success")
+                ? "bg-green-100 text-green-700 border border-green-200"
+                : "bg-red-100 text-red-700 border border-red-200"
             }`}
           >
             {message}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Personal Information */}
           <div>
-            <label className="block text-sm font-medium mb-2">Name</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-transparent"
-              required
-            />
-          </div>
+            <h2
+              className={`text-xl font-semibold mb-6 ${
+                isDark ? "text-white" : "text-gray-900"
+              }`}
+            >
+              Personal Information
+            </h2>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">Email (cannot be changed)</label>
-            <input
-              type="email"
-              value={user?.email}
-              className="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700"
-              disabled
-            />
-          </div>
-
-          <div className="border-t pt-6">
-            <h3 className="text-lg font-semibold mb-4">Change Password</h3>
-            <div className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Name */}
               <div>
-                <label className="block text-sm font-medium mb-2">Current Password</label>
+                <label className="block text-sm font-medium mb-2">
+                  Full Name
+                </label>
+
                 <input
-                  type="password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-transparent"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className={`
+                    w-full px-4 py-3 rounded-xl border
+                    focus:ring-2 focus:ring-indigo-500
+                    outline-none transition
+                    ${
+                      isDark
+                        ? "bg-gray-800 border-gray-700 text-white"
+                        : "bg-white border-gray-300"
+                    }
+                  `}
                 />
               </div>
 
+              {/* Email */}
               <div>
-                <label className="block text-sm font-medium mb-2">New Password</label>
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-transparent"
-                  minLength={6}
-                />
-              </div>
+                <label className="block text-sm font-medium mb-2">
+                  Email Address
+                </label>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">Confirm New Password</label>
                 <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-transparent"
-                  minLength={6}
+                  type="email"
+                  value={user?.email}
+                  disabled
+                  className={`
+                    w-full px-4 py-3 rounded-xl border cursor-not-allowed
+                    ${
+                      isDark
+                        ? "bg-gray-800 border-gray-700 text-gray-400"
+                        : "bg-gray-100 border-gray-300 text-gray-500"
+                    }
+                  `}
                 />
               </div>
             </div>
           </div>
 
+          {/* Password Section */}
+          <div
+            className={`pt-8 border-t ${
+              isDark
+                ? "border-gray-800"
+                : "border-gray-200"
+            }`}
+          >
+            <h2
+              className={`text-xl font-semibold mb-6 ${
+                isDark ? "text-white" : "text-gray-900"
+              }`}
+            >
+              Change Password
+            </h2>
+
+            <div className="grid gap-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Current Password
+                </label>
+
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) =>
+                    setCurrentPassword(e.target.value)
+                  }
+                  className={`
+                    w-full px-4 py-3 rounded-xl border
+                    focus:ring-2 focus:ring-indigo-500
+                    outline-none
+                    ${
+                      isDark
+                        ? "bg-gray-800 border-gray-700 text-white"
+                        : "bg-white border-gray-300"
+                    }
+                  `}
+                />
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    New Password
+                  </label>
+
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) =>
+                      setNewPassword(e.target.value)
+                    }
+                    minLength={6}
+                    className={`
+                      w-full px-4 py-3 rounded-xl border
+                      focus:ring-2 focus:ring-indigo-500
+                      outline-none
+                      ${
+                        isDark
+                          ? "bg-gray-800 border-gray-700 text-white"
+                          : "bg-white border-gray-300"
+                      }
+                    `}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Confirm Password
+                  </label>
+
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) =>
+                      setConfirmPassword(e.target.value)
+                    }
+                    minLength={6}
+                    className={`
+                      w-full px-4 py-3 rounded-xl border
+                      focus:ring-2 focus:ring-indigo-500
+                      outline-none
+                      ${
+                        isDark
+                          ? "bg-gray-800 border-gray-700 text-white"
+                          : "bg-white border-gray-300"
+                      }
+                    `}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
           <div className="flex justify-end">
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="
+                px-8 py-3
+                rounded-xl
+                bg-gradient-to-r
+                from-indigo-600
+                to-purple-600
+                text-white
+                font-semibold
+                shadow-lg
+                hover:scale-105
+                transition-all
+                disabled:opacity-50
+              "
             >
-              {loading ? 'Saving...' : 'Save Changes'}
+              {loading
+                ? "Saving Changes..."
+                : "Save Changes"}
             </button>
           </div>
         </form>
       </div>
     </div>
-  );
-};
+  </div>
+);};
 
 export default Profile;
