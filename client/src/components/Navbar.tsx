@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { Sun, Moon, LogOut, User } from 'lucide-react';
+import { Sun, Moon, LogOut} from 'lucide-react';
 import { toggleTheme } from '../store/slice/themeSlice';
 import { logout } from '../store/slice/authSlice';  // Import logout action
 import type { RootState } from '../store';
