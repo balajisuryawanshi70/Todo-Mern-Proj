@@ -15,7 +15,7 @@ connectDB();
 
 app.use(cors({
   origin: (origin, callback) => {
-    const allowedOrigins = ['http://localhost:5173','',]; 
+    const allowedOrigins = ['http://localhost:5173','https://todo-mern-proj.vercel.app/login',]; 
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);  // Allow the request
     } else {
